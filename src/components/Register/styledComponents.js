@@ -19,22 +19,42 @@ export const HeaderImage = styled.img`
 
 export const MainContainer = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  @media screen and (min-width: 768px) {
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
 `
 
 export const ImageContainer = styled.div`
   display: flex;
-  width: 40%;
+  width: 100%;
   align-items: center;
+  justify-content: center;
+  max-width: 600px;
+  @media screen and (min-width: 768px) {
+    width: 40%;
+    max-width: 450px;
+  }
 `
 
 export const Image = styled.img`
-  width: 80%;
+  width: 60%;
+  @media screen and (min-width: 768px) {
+    width: 90%;
+  }
 `
 
 export const FormContainer = styled.form`
   display: flex;
   flex-direction: column;
+  width: 80%;
+  @media screen and (min-width: 768px) {
+    width: 35%;
+  }
 `
 
 export const FormHeading = styled.h1`
@@ -46,12 +66,14 @@ export const FormHeading = styled.h1`
 export const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
+  margin-bottom: 20px;
 `
 
 export const Label = styled.label`
   font-size: 14px;
   font-family: 'Roboto';
   color: #64748b;
+  margin-bottom: 5px;
 `
 
 export const Input = styled.input`
@@ -82,10 +104,14 @@ export const ButtonContainer = styled.div`
 `
 
 export const Button = styled.button`
-  padding: 10px 20px;
+  padding: 10px 25px;
   background-color: #2563eb;
   border: none;
   color: #ffffff;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: 'Roboto';
+  cursor: pointer;
 `
 
 export const ErrorMsg = styled.p`

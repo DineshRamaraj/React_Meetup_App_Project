@@ -1,7 +1,9 @@
-import {Switch, Route} from 'react-router-dom'
+import {Switch, Route, Redirect, withRouter} from 'react-router-dom'
 import {Component} from 'react'
 import Home from './components/Home'
 import Register from './components/Register'
+import ContextComponent from './Context/ContextComponent'
+import NotFound from './components/NotFound'
 import './App.css'
 
 const topicsList = [
@@ -35,55 +37,56 @@ class App extends Component {
     errorMsg: '',
   }
 
-  clickRegister = () => {
-    this.setState({isRegister: true})
-  }
-
-  changeNameInput = value => {
+  changeName = value => {
     this.setState({nameInput: value})
   }
 
-  changeSelectInput = value => {
-    this.setState({selectInput: value})
+  changeSelect = valueID => {
+    this.setState({selectInput: valueID})
   }
 
-  submitForm = event => {
-    event.preventDefault()
+  changePath = () => {
+    const {history} = this.props
+    history.replace('/')
+  }
+
+  submitForm = () => {
     const {nameInput} = this.state
     if (nameInput === '') {
       this.setState({errorMsg: 'Please enter your name'})
     } else {
       this.setState({
         isRegister: true,
-        nameInput: '',
-        selectInput: topicsList[0].id,
       })
+      this.changePath()
     }
   }
 
   render() {
     const {nameInput, selectInput, isRegister, errorMsg} = this.state
     return (
-      <Switch>
-        <Route
-          exact
-          path="/"
-          component={Home}
-          isRegister={isRegister}
-          clickRegister={this.clickRegister}
-        />
-        <Route
-          path="/register"
-          component={Register}
-          changeNameInput={this.changeNameInput}
-          changeSelectInput={this.changeSelectInput}
-          nameInput={nameInput}
-          selectInput={selectInput}
-          errorMsg={errorMsg}
-        />
-      </Switch>
+      <ContextComponent.Provider
+        value={{
+          topicsList,
+          isRegister,
+          nameInput,
+          selectInput,
+          errorMsg,
+          changeName: this.changeName,
+          changeSelect: this.changeSelect,
+          submitForm: this.submitForm,
+          changePath: this.changePath,
+        }}
+      >
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/register" component={Register} />
+          <Route path="/not-found" component={NotFound} />
+          <Redirect to="/not-found" />
+        </Switch>
+      </ContextComponent.Provider>
     )
   }
 }
 
-export default App
+export default withRouter(App)

@@ -32,7 +32,7 @@ export const RegisterHeading = styled.h1`
   margin-bottom: 10px;
 `
 
-export const RegisterSubHeading = styled.h1`
+export const RegisterSubHeading = styled.p`
   font-family: 'Roboto';
   font-size: 24px;
   color: #475569;
